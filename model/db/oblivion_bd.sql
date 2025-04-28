@@ -3,8 +3,8 @@ CREATE TABLE Users (
   idUser TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   names VARCHAR(80) NOT NULL,
   emails VARCHAR(45) NOT NULL UNIQUE,
-  passwords VARCHAR(80) NOT NULL,
-  types BIT NOT NULL --aqui eu me perdi na hora de relacionar (0 seria cliente e 1 adm)
+  passwords VARCHAR(255) NOT NULL, --Senha criptografada (255 caracteres para suportar hashes seguros)
+  types ENUM('client', 'admin') NOT NULL,
 );
 
 -- Clientes com dados obrigatórios
@@ -79,8 +79,8 @@ CREATE TABLE StockMoviment (
   nameStockMoviment VARCHAR(50) NOT NULL,
   dateStockMoviment DATE NOT NULL,
   idStockCategory TINYINT UNSIGNED NOT NULL,
-  -- typeStockMoviment seria relacionar a saida, entrada e definição de estoque (faria sentido armazenar em outra tabela?)
-  idAdmin TINYINT NOT NULL,
+  typeStockMoviment ENUM('exit', 'entry', 'definition') NOT NULL,
+  idAdmin TINYINT NOT NULL, 
   idProduct SMALLINT UNSIGNED NOT NULL, --fica a duvida de como alterar
   FOREIGN KEY (idStockCategory) REFERENCES StockCategory(idStockCategory)
   FOREIGN KEY (idAdmins) REFERENCES Admins(idAdmins)
@@ -95,7 +95,7 @@ CREATE TABLE Orders (
   idProduct SMALLINT UNSIGNED NOT NULL, --fica a duvida de como adcionar
   idPayment TINYINT UNSIGNED NOT NULL, --no caso a condição ja vem associada com o pagamento?
   totalityOrders SMALLINT UNSIGNED NOT NULL, --Seria o valor total dos itens (ujwdxd eu ainda não entendi muito bem)
-  statusOrders BIT NOT NULL, --não da pra colocar default
+  statusOrders ENUM('pending', 'cancel', 'aproved') NOT NULL,
   FOREIGN KEY (idClients) REFERENCES Clients(idClients),
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct),
   FOREIGN KEY (idPayment) REFERENCES Payment(idPayment)
