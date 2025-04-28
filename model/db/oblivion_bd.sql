@@ -1,25 +1,25 @@
 -- Usuário genérico
 CREATE TABLE Users (
   idUser TINYINT AUTO_INCREMENT PRIMARY KEY,
-  nameUser VARCHAR(80) NOT NULL,
-  emailUser VARCHAR(45) NOT NULL UNIQUE,
-  passUser VARCHAR(80) NOT NULL,
-  typeUser BIT NOT NULL --aqui eu me perdi na hora de relacionar (0 seria cliente e 1 adm)
+  names VARCHAR(80) NOT NULL,
+  emails VARCHAR(45) NOT NULL UNIQUE,
+  passwords VARCHAR(80) NOT NULL,
+  types BIT NOT NULL --aqui eu me perdi na hora de relacionar (0 seria cliente e 1 adm)
 );
 
 -- Clientes com dados obrigatórios
 CREATE TABLE Clients (
-  idClient TINYINT AUTO_INCREMENT PRIMARY KEY,
-  idUser TINYINT PRIMARY KEY,
-  cpfClient CHAR(11) NOT NULL UNIQUE,
-  cellClient CHAR(11) NOT NULL UNIQUE,
+  idClients TINYINT AUTO_INCREMENT PRIMARY KEY,
+  idUsers TINYINT,
+  cpfs CHAR(11) NOT NULL UNIQUE,
+  cells CHAR(11) NOT NULL UNIQUE,
   FOREIGN KEY (idUser) REFERENCES User(idUser)
 );
 
 -- Admins com dados mais simples
 CREATE TABLE Admins (
-  idAdmin TINYINT AUTO_INCREMENT PRIMARY KEY,
-  idUser TINYINT PRIMARY KEY,
+  idAdmins TINYINT AUTO_INCREMENT PRIMARY KEY,
+  idUsers TINYINT,
   FOREIGN KEY (idUser) REFERENCES User(idUser)
 );
 
@@ -88,15 +88,15 @@ CREATE TABLE StockMoviment (
 );
 
 CREATE TABLE Orders (
-  idOrder SMALLINT AUTO_INCREMENT PRIMARY KEY,
-  dateOrder DATE NOT NULL,
-  codOrder CHAR(5) NOT NULL UNIQUE,
-  idClient TINYINT NOT NULL,
+  idOrders SMALLINT AUTO_INCREMENT PRIMARY KEY,
+  dateOrders DATE NOT NULL,
+  codOrders CHAR(5) NOT NULL UNIQUE,
+  idClients TINYINT NOT NULL,
   idProduct SMALLINT NOT NULL, --fica a duvida de como adcionar
   idPayment TINYINT NOT NULL, --no caso a condição ja vem associada com o pagamento?
-  totalityOrder SMALLINT NOT NULL, --Seria o valor total dos itens (ujwdxd eu ainda não entendi muito bem)
-  statusOrder BIT NOT NULL, --não da pra colocar default
-  FOREIGN KEY (idClient) REFERENCES Client(idClient),
+  totalityOrders SMALLINT NOT NULL, --Seria o valor total dos itens (ujwdxd eu ainda não entendi muito bem)
+  statusOrders BIT NOT NULL, --não da pra colocar default
+  FOREIGN KEY (idClients) REFERENCES Clients(idClients),
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct),
   FOREIGN KEY (idPayment) REFERENCES Payment(idPayment)
 );
