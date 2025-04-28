@@ -13,14 +13,14 @@ CREATE TABLE Clients (
   idUsers TINYINT,
   cpfs CHAR(11) NOT NULL UNIQUE,
   cells CHAR(11) NOT NULL UNIQUE,
-  FOREIGN KEY (idUser) REFERENCES User(idUser)
+  FOREIGN KEY (idUsers) REFERENCES Users(idUsers)
 );
 
 -- Admins com dados mais simples
 CREATE TABLE Admins (
   idAdmins TINYINT AUTO_INCREMENT PRIMARY KEY,
   idUsers TINYINT,
-  FOREIGN KEY (idUser) REFERENCES User(idUser)
+  FOREIGN KEY (idUsers) REFERENCES Users(idUsers)
 );
 
 -- Categorias
@@ -83,7 +83,7 @@ CREATE TABLE StockMoviment (
   idAdmin TINYINT NOT NULL,
   idProduct SMALLINT NOT NULL, --fica a duvida de como alterar
   FOREIGN KEY (idStockCategory) REFERENCES StockCategory(idStockCategory)
-  FOREIGN KEY (idAdmin) REFERENCES Admin(idAdmin)
+  FOREIGN KEY (idAdmins) REFERENCES Admins(idAdmins)
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct)
 );
 
