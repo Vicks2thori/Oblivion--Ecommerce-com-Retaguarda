@@ -1,5 +1,5 @@
 -- Usuário genérico
-CREATE TABLE User ( --user, admin e client estão parecendo ser palavras restritas
+CREATE TABLE Users (
   idUser TINYINT AUTO_INCREMENT PRIMARY KEY,
   nameUser VARCHAR(80) NOT NULL,
   emailUser VARCHAR(45) NOT NULL UNIQUE,
@@ -8,7 +8,7 @@ CREATE TABLE User ( --user, admin e client estão parecendo ser palavras restrit
 );
 
 -- Clientes com dados obrigatórios
-CREATE TABLE Client (
+CREATE TABLE Clients (
   idClient TINYINT AUTO_INCREMENT PRIMARY KEY,
   idUser TINYINT PRIMARY KEY,
   cpfClient CHAR(11) NOT NULL UNIQUE,
@@ -17,7 +17,7 @@ CREATE TABLE Client (
 );
 
 -- Admins com dados mais simples
-CREATE TABLE Admin ( --eu não sei porque saiu assim e muito menos como vou armazenar depois WHEGFC
+CREATE TABLE Admins (
   idAdmin TINYINT AUTO_INCREMENT PRIMARY KEY,
   idUser TINYINT PRIMARY KEY,
   FOREIGN KEY (idUser) REFERENCES User(idUser)
@@ -87,7 +87,7 @@ CREATE TABLE StockMoviment (
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct)
 );
 
-CREATE TABLE Order ( --Order parece ser uma palavra restrita
+CREATE TABLE Orders (
   idOrder SMALLINT AUTO_INCREMENT PRIMARY KEY,
   dateOrder DATE NOT NULL,
   codOrder CHAR(5) NOT NULL UNIQUE,
