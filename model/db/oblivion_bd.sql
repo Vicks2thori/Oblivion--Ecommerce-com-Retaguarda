@@ -2,7 +2,7 @@
 CREATE TABLE Users (
   idUser TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   names VARCHAR(80) NOT NULL,
-  emails VARCHAR(45) NOT NULL UNIQUE,
+  emails VARCHAR(50) NOT NULL UNIQUE,
   passwords VARCHAR(255) NOT NULL, --Senha criptografada (255 caracteres para suportar hashes seguros)
   types ENUM('client', 'admin') NOT NULL,
 );
@@ -26,7 +26,7 @@ CREATE TABLE Admins (
 -- Categorias
 CREATE TABLE Category (
   idCategory TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  nameCategory VARCHAR(45) NOT NULL,
+  nameCategory VARCHAR(50) NOT NULL,
   statusCategory BIT NOT NULL DEFAULT 1
 );
 
@@ -68,12 +68,14 @@ CREATE TABLE Stock (
   quantityStock SMALLINT NOT NULL DEFAULT 0
 );
 
+-- Categoria de Movimentação de estoque
 CREATE TABLE StockCategory (
   idStockCategory SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nameStockCategory VARCHAR(50) NOT NULL,
   statusStockCategory BIT NOT NULL DEFAULT 1
 );
 
+-- Movimentação de estoque
 CREATE TABLE StockMoviment (
   idStockMoviment SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nameStockMoviment VARCHAR(50) NOT NULL,
@@ -87,6 +89,7 @@ CREATE TABLE StockMoviment (
   FOREIGN KEY (idProduct) REFERENCES Product(idProduct)
 );
 
+-- Pedidos
 CREATE TABLE Orders (
   idOrders SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   dateOrders DATE NOT NULL,
@@ -101,6 +104,7 @@ CREATE TABLE Orders (
   FOREIGN KEY (idPayment) REFERENCES Payment(idPayment)
 );
 
+-- Empresas
 CREATE TABLE Enterprise ( --Não sei exatamente como chamar pq a ideia é ter um bd para cada empresa mas seria sobre o site esse
   idEnterprise TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nameEnterprise VARCHAR(50) NOT NULL,
