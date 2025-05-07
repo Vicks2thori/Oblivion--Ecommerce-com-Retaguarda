@@ -34,26 +34,51 @@ CREATE TABLE Category (
 CREATE TABLE Product (
   idProduct SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nameProduct VARCHAR(100) NOT NULL,
-  -- imageProduct como por Deus armazena imagem wefuigearh
-  precyProduct DECIMAL(8,2) NOT NULL,
+  idImages SMALLINT UNSIGNED NOT NULL,
+  priceProduct DECIMAL(8,2) NOT NULL,
   codProduct BIGINT NOT NULL,
   statusProduct BIT NOT NULL DEFAULT 1,
   idCategory TINYINT UNSIGNED NOT NULL,
   idStock SMALLINT UNSIGNED NOT NULL,
+  FOREIGN KEY (idImages) REFERENCES Images(idImages),
   FOREIGN KEY (idCategory) REFERENCES Category(idCategory),
   FOREIGN KEY (idStock) REFERENCES Stock(idStock)
+);
+
+-- Armazenar imagens
+CREATE TABLE Images (
+  idImages SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nameImage VARCHAR(50) NOT NULL UNIQUE,
+  patchImage VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Formas de pagamento
 CREATE TABLE Payment (
   idPayment TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   namePayment VARCHAR(50) NOT NULL,
-  -- imgPayment mesmo bo do produto, vi sobre armazenar o caminho dela mas ainda não sei como vou apresentar
-  -- e teriam imagens "padrões"
+  idImgPayment TINYINT UNSIGNED NOT NULL,
   statusPayment BIT NOT NULL DEFAULT 1
   idPaymentCondition TINYINT UNSIGNED NOT NULL,
-  FOREIGN KEY (idPaymentCondition) REFERENCES PaymentCondition(idPaymentCondition)
+  FOREIGN KEY (idPaymentCondition) REFERENCES PaymentCondition(idPaymentCondition),
+  FOREIGN KEY (idImgPayment) REFERENCES ImgPayment(idImgPayment)
 );
+
+-- Imagem das formas de pagamento (padrões)
+CREATE TABLE ImgPayment (
+  idImgPayment TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nameImgPayment VARCHAR(50) NOT NULL UNIQUE,
+  patchImgPayment VARCHAR(50) NOT NULL UNIQUE,
+  INSERT INTO ()
+);
+
+--Inserindo as imagens padrões
+INSERT INTO ImgPayment (nameImgPayment, patchImgPayment)
+VALUES 
+('Cartão', 'caminho/da/imagem1'),
+('Dinheiro', 'caminho/da/imagem2'),
+('Voucher', 'caminho/da/imagem3')
+('Pix', 'caminho/da/imagem4')
+('Outros', 'caminho/da/imagem5');
 
 -- Condição de pagamento
 CREATE TABLE PaymentCondition (
@@ -108,12 +133,13 @@ CREATE TABLE Orders (
 CREATE TABLE Enterprise ( --Não sei exatamente como chamar pq a ideia é ter um bd para cada empresa mas seria sobre o site esse
   idEnterprise TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nameEnterprise VARCHAR(50) NOT NULL,
+  idImgPayment TINYINT UNSIGNED NULL, --Armazenar a logo
   primary_colorEnterprise CHAR(6) NOT NULL DEFAULT "000000",
   second_colorEnterprise CHAR(6) NOT NULL DEFAULT "123456", --numeroa aleatórios pois ainda não decidimos o hexa "padrão"
   text_colorEnterprise CHAR(6) NOT NULL DEFAULT "FFFFFF",
   cellEnterprise CHAR(11) NOT NULL,
-  -- logoEnterprise novamentea preciso decidir como armazenar imagens
   instagramEnterprise VARCHAR(50) NULL, --seria apenas o nome? preciso decidir
   facebookEnterprise VARCHAR(50) NULL,
-  emailEnterprise VARCHAR(50) NULL
+  emailEnterprise VARCHAR(50) NULL,
+  FOREIGN KEY (idImgPayment) REFERENCES ImgPayment(idImgPayment)
 );

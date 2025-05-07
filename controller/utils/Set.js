@@ -1,0 +1,1 @@
+//Criando funções comuns para alterar

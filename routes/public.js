@@ -1,4 +1,5 @@
 import express from 'express';
+const db = require('../model/db/conectiondb/conection_db'); 
 
 const router = express.Router() //instanciando
 
@@ -15,14 +16,34 @@ patch - modifica de forma parcial
 delete - deleta alguma informação
 */
 
+//Puxar o nome da empresa para rota ecommerce
+async function Enterprise() {
+
+    const conn = await db.getConnection();
+    try {
+      const Enterprise = await conn.query(`
+        SELECT nameEnterprise FROM Enterprise`);
+        console.log('Exibindo nome da empresa na rota');
+    } catch (err) {
+        console.error(`Erro ao exibir nome da empresa na rota: `, err);
+    } finally {
+        conn.release();
+    }
+
+    return Enterprise;
+}
+
+Enterprise();
+
 //pagina do ecommerce
-router.get("/", (req, res) => {
+router.get(`/Oblivion.app/${Enterprise}`, (req, res) => {
     res.send("pagina do ecommerce do cliente")
 })
-router.post("/", (req, res) => {
+router.post(`/Oblivion.app/${Enterprise}`, (req, res) => {
     res.send("enviar pedido")
 })
-router.patch("/", (req, res) => {
+router.patch(`/Oblivion.app/${Enterprise}`
+    , (req, res) => {
     res.send("Mudar opções de cadastros")
 })
 
