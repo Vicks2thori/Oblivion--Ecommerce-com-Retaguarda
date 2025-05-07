@@ -48,11 +48,18 @@ CREATE TABLE Product (
 CREATE TABLE Payment (
   idPayment TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   namePayment VARCHAR(50) NOT NULL,
-  -- imgPayment mesmo bo do produto, vi sobre armazenar o caminho dela mas ainda não sei como vou apresentar
-  -- e teriam imagens "padrões"
+  idImgPayment TINYINT UNSIGNED NOT NULL,
   statusPayment BIT NOT NULL DEFAULT 1
   idPaymentCondition TINYINT UNSIGNED NOT NULL,
-  FOREIGN KEY (idPaymentCondition) REFERENCES PaymentCondition(idPaymentCondition)
+  FOREIGN KEY (idPaymentCondition) REFERENCES PaymentCondition(idPaymentCondition),
+  FOREIGN KEY (idImgPayment) REFERENCES ImgPayment(idImgPayment)
+);
+
+-- Formas de pagamento
+CREATE TABLE ImgPayment (
+  idImgPayment TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nameImgPayment VARCHAR(50) NOT NULL,
+  patchImgPayment VARCHAR(50) NOT NULL,
 );
 
 -- Condição de pagamento
