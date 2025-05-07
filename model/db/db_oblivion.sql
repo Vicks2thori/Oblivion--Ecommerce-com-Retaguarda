@@ -35,7 +35,7 @@ CREATE TABLE Product (
   idProduct SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nameProduct VARCHAR(100) NOT NULL,
   -- imageProduct como por Deus armazena imagem wefuigearh
-  precyProduct DECIMAL(8,2) NOT NULL,
+  priceProduct DECIMAL(8,2) NOT NULL,
   codProduct BIGINT NOT NULL,
   statusProduct BIT NOT NULL DEFAULT 1,
   idCategory TINYINT UNSIGNED NOT NULL,
