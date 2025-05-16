@@ -1,15 +1,14 @@
 //Criando funções comuns para mostrar
 
-const db = require('../../model/db/connection_db.js'); 
+const db = require('../../model/db/connection_db.js');
 
-//Exibir conforme status
-async function GetStatus(nameTable, status) {
-    let statusTable = "status" + nameTable; //Minhas tabelas todas 
+//GET
+async function Get(nameTable) {
     const conn = await db.getConnection();
     try {
       await conn.query(`
-        SELECT * FROM ${nameTable} WHERE ${statusTable} = ${status}`);
-        console.log('Exibindo produtos por status ', statusProduct);
+        SELECT * FROM ${nameTable}`);
+        console.log('Exibindo itens de ', nameTable);
     } catch (err) {
         console.error(`Erro ao exibir ${nameTable}: `, err);
     } finally {
@@ -17,15 +16,17 @@ async function GetStatus(nameTable, status) {
     }
 }
 
-async function Get(nameTable) {
-    let statusTable = "status" + nameTable; //Minhas tabelas todas 
+//Exibir conforme status
+async function GetStatus(nameTable, status) {
+    let statusColumn = "status" + nameTable; //Minhas tabelas todas 
     const conn = await db.getConnection();
     try {
       await conn.query(`
-        SELECT * FROM ${nameTable}`);
-        console.log('Exibindo produtos por status ', nameTable);
+        SELECT * FROM ${nameTable} WHERE ${statusColumn} = ?`,
+        [status]);
+        console.log('Exibindo itens por status ', status);
     } catch (err) {
-        console.error(`Erro ao exibir ${nameTable}: `, err);
+        console.error(`Erro ao exibir ${nameTable} por status ${status}: `, err);
     } finally {
         conn.release();
     }
